@@ -1,2 +1,8 @@
 .vscode/
-.vscode/
+My Project/
+obj/
+.vs/
+bin/
+stack-vm.sln
+stack-vm.vbproj
+stack-vm.vbproj.user
