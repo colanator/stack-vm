@@ -1,2 +1,4 @@
-ADD 1 2
-SUB 1 2
+PUSH 1;
+PUSH 2;
+ADD;
+POP;
