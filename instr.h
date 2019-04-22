@@ -28,7 +28,7 @@ void execute_push_instruction(char *elem_to_be_pushed){
 }
 
 void execute_pop_instruction(){
-    printf("pop: %i\n", pop());
+    printf("%i\n", pop());
 }
 
 void execute_instruction(char instruction[]) {
