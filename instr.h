@@ -32,7 +32,6 @@ void execute_pop_instruction(){
 }
 
 void execute_instruction(char instruction[]) {
-    //printf("Executing instruction: %s", instruction);
 
     //Split instruction into tokens, which determine different parts of instruction.
     char *instr_tokens[6];
