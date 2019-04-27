@@ -15,3 +15,8 @@ int pop() {
     vm_stack.top_elem_of_stack--;
     return popped_elem;
 }
+
+int peek() {
+    int peek_elem = vm_stack.stack[vm_stack.top_elem_of_stack];
+    return peek_elem;
+}
