@@ -4,7 +4,7 @@ struct Instruction_memory {
     int instruction_pointer;
 };
 typedef struct Instruction_memory INSTRUCTION_MEMORY;
-INSTRUCTION_MEMORY vm_instruction_memory = {.instruction_memory = {{""}}, .no_of_instructions = 0};
+INSTRUCTION_MEMORY vm_instruction_memory = {.instruction_memory = {{""}}, .no_of_instructions = 0, .instruction_pointer = 1};
 
 void add_instruction(int address, char instruction[]) {
     strcpy(vm_instruction_memory.instruction_memory[address], instruction);

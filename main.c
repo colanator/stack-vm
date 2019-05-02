@@ -44,7 +44,7 @@ int main (int argc, char *argv[]) {
 
    //execute instructions from the instruction memory
    for(int i = 1; i <= no_of_instructions(); i++){
-      printf("EXECUTING: %s", fetch_instruction(vm_instruction_memory.instruction_pointer));
+      //printf("EXECUTING: %s", fetch_instruction(vm_instruction_memory.instruction_pointer));
       execute_instruction(fetch_instruction(vm_instruction_memory.instruction_pointer));
       vm_instruction_memory.instruction_pointer++;
    }

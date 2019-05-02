@@ -1,4 +1,4 @@
-SUB;
+ADD;
 IFEQ 8;
 JMP 5;
 ADD;

@@ -6,3 +6,6 @@ bin/
 stack-vm.sln
 stack-vm.vbproj
 stack-vm.vbproj.user
+*.out
+*.o
+stack-vm
