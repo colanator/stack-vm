@@ -1,4 +1,4 @@
-IFEQ 3;
+IFEQ 25;
 JMP 7;
 PUSH 1;
 ADD;

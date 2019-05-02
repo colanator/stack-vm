@@ -37,23 +37,31 @@ void execute_peek_instruction(){
 
 void execute_ifeq_instruction(char *condition){
     int condition_casted = atoi(condition);
-    if(condition_casted == peek()){
+    if(condition_casted != peek()){
         vm_instruction_memory.instruction_pointer++;
     }
 }
 
 void execute_jmp_instruction(char *jmp_target){
     int jmp_target_casted = atoi(jmp_target);
-    vm_instruction_memory.instruction_pointer = jmp_target_casted;
+    vm_instruction_memory.instruction_pointer = jmp_target_casted - 1;
+}
+
+void execute_halt_instruction(){
+    vm_instruction_memory.instruction_pointer = 1000;
 }
 
 void execute_instruction(char instruction[]) {
+
+    //Copy instruction string to temporary variable to avoid side effects.
+    char instr_copied[32];
+    strcpy(instr_copied, instruction);
 
     //Split instruction into tokens, which determine different parts of instruction.
     char *instr_tokens[6];
     char *pch;
     int counter = 0;
-    pch = strtok(instruction, " ;");
+    pch = strtok(instr_copied, " ;");
     while(pch != NULL) {
         instr_tokens[counter] = pch;
         counter++;
@@ -79,6 +87,8 @@ void execute_instruction(char instruction[]) {
         execute_ifeq_instruction(instr_tokens[1]);
     } else if(strcmp(instr_tokens[0], "JMP") == 0) {
         execute_jmp_instruction(instr_tokens[1]);
+    } else if(strcmp(instr_tokens[0], "HALT") == 0) {
+        execute_halt_instruction();
     } else {
         printf("Invalid instruction! Check your syntax.\n");
     }

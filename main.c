@@ -17,12 +17,6 @@ int main (int argc, char *argv[]) {
       }
    }
 
-   //add_instruction(41, "PUSH 1");
-   //add_instruction(31, "PUSH 32");
-   //printf("INSTR: %s\n", fetch_instruction(41));
-   //printf("INSTR: %s\n", fetch_instruction(31));
-   //printf("NO OF INSTR: %i\n", no_of_instructions());
-
    //read source code file and initialize the instruction memory
    char *filename = argv[1];
    FILE *file = fopen(filename, "r");
@@ -43,10 +37,10 @@ int main (int argc, char *argv[]) {
    }
 
    //execute instructions from the instruction memory
-   for(int i = 1; i <= no_of_instructions(); i++){
-      //printf("EXECUTING: %s", fetch_instruction(vm_instruction_memory.instruction_pointer));
+   while (vm_instruction_memory.instruction_pointer <= 999) {
       execute_instruction(fetch_instruction(vm_instruction_memory.instruction_pointer));
       vm_instruction_memory.instruction_pointer++;
    }
+
    return 0;
 }
