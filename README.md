@@ -17,6 +17,9 @@ Instructions are composed from the OpCode and parameters.
 | DIV | - | Divide the topmost element of the stack by the second topmost. Result on top of stack. |
 | PUSH | Integer | Push the parameter onto the stack. |
 | POP | - | Pop the topmost element of stack. Print its value. |
+| PEEK | - | Print the topmost element of stack, don't pop. |
+| IFEQ | Integer | If the value is equal to top of stack, execute next instruction. Otherwise skip instruction. |
+| HALT | - | End program. Stop execution. |
 
 Example program:
 ```
