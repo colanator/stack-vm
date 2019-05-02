@@ -1,2 +1,5 @@
+SUB;
+IFEQ 8;
+JMP 5;
 ADD;
 POP;

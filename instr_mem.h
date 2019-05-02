@@ -1,6 +1,7 @@
 struct Instruction_memory {
     char instruction_memory[256][32];
     int no_of_instructions;
+    int instruction_pointer;
 };
 typedef struct Instruction_memory INSTRUCTION_MEMORY;
 INSTRUCTION_MEMORY vm_instruction_memory = {.instruction_memory = {{""}}, .no_of_instructions = 0};
@@ -17,3 +18,7 @@ char* fetch_instruction(int address) {
 int no_of_instructions() {
     return vm_instruction_memory.no_of_instructions;
 }
+
+//int add_label(char instruction[], int instruction_pointer) {
+//    return vm_instruction_memory.no_of_instructions;
+//}
