@@ -1,7 +1,7 @@
-IFEQ 25;
-JMP 7;
-PUSH 1;
-ADD;
-PEEK;
-JMP 1;
-HALT;
+IFEQ 25; // Is top of stack equal to 25?
+JMP 7; // If last instructions condition was true, jump to end
+PUSH 1; // Push 1 to stack
+ADD; // Add 1 to our number (pushed with last instruction)
+PEEK; // Print out our number
+JMP 1; // Jump to the beginning
+HALT; // End of program
