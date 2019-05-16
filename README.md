@@ -18,7 +18,10 @@ Instructions are composed from the OpCode and parameters.
 | PUSH | Integer | Push the parameter onto the stack. |
 | POP | - | Pop the topmost element of stack. Print its value. |
 | PEEK | - | Print the topmost element of stack, don't pop. |
+| JMP | Integer | Jump to instruction at parameter location. |
 | IFEQ | Integer | If the value is equal to top of stack, execute next instruction. Otherwise skip instruction. |
+| IFGT | Integer | If the value is greater than top of stack, execute next instruction. Otherwise skip instruction. |
+| IFLT | Integer | If the value is lesser than top of stack, execute next instruction. Otherwise skip instruction. |
 | HALT | - | End program. Stop execution. |
 
 Example program:
