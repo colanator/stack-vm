@@ -13,7 +13,7 @@ Instructions are composed from the OpCode and parameters.
 | ---------- | ------------- | ---------- |
 | ADD | - | Add the two topmost elements of the stack together. Result on top of stack. |
 | SUB | - | Subtract the topmost element of the stack from the second topmost. Result on top of stack. |
-| ADD | - | Multiply the two topmost elements of the stack together. Result on top of stack. |
+| MUL | - | Multiply the two topmost elements of the stack together. Result on top of stack. |
 | DIV | - | Divide the topmost element of the stack by the second topmost. Result on top of stack. |
 | PUSH | Integer | Push the parameter onto the stack. |
 | POP | - | Pop the topmost element of stack. Print its value. |
