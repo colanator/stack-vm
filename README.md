@@ -29,6 +29,6 @@ Example program:
 PUSH 1;
 PUSH 2;
 ADD;
-POP;
+PRINT;
 ```
-The above program pushes the numbers 1 and 2 onto the stack. Then it pops them both from the stack, and adds them together. The result is pushed back onto the stack. The result is then popped and printed out to the standard output of the runtime environment.
+The above program pushes the numbers 1 and 2 onto the stack. Then it pops them both from the stack, and adds them together. The result is pushed back onto the stack. The result is then printed out to the standard output of the runtime environment.
