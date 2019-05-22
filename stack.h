@@ -50,11 +50,18 @@ struct StackElement pop() {
 // Return top element of stack, but don't pop it
 struct StackElement peek() {
     struct StackElement poppedElement;
-    poppedElement = vm_stack[top_elem_of_stack];
+    poppedElement.type = vm_stack[top_elem_of_stack].type;
+    if(poppedElement.type == type_int){
+        poppedElement.integer = vm_stack[top_elem_of_stack].integer;
+    }
+    if(poppedElement.type == type_string){
+        poppedElement.string = strdup(vm_stack[top_elem_of_stack].string);
+    }
     return poppedElement;
 }
 
 // Remove the top element
 void drop() {
     top_elem_of_stack--;
+    // TODO deallocate memory for string element
 }
