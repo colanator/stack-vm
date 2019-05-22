@@ -37,15 +37,15 @@ void execute_push_instruction(char *elem_to_be_pushed){
     push(elem_to_be_pushed_casted);
 }
 
-// POP - instruction
-// Top element of stack is popped and printed out
-void execute_pop_instruction(){
-    printf("%i\n", pop());
+// DROP - instruction
+// Top element of stack is popped (removed)
+void execute_drop_instruction(){
+    drop();
 }
 
-// PEEK - instruction
+// PRINT - instruction
 // Top element of stack is printed out without popping
-void execute_peek_instruction(){
+void execute_print_instruction(){
     printf("%i\n", peek());
 }
 
@@ -119,10 +119,10 @@ void execute_instruction(char instruction[]) {
         execute_div_instruction();
     } else if(strcmp(instr_tokens[0], "PUSH") == 0) {
         execute_push_instruction(instr_tokens[1]);
-    } else if(strcmp(instr_tokens[0], "POP") == 0) {
-        execute_pop_instruction();
-    } else if(strcmp(instr_tokens[0], "PEEK") == 0) {
-        execute_peek_instruction();
+    } else if(strcmp(instr_tokens[0], "DROP") == 0) {
+        execute_drop_instruction();
+    } else if(strcmp(instr_tokens[0], "PRINT") == 0) {
+        execute_print_instruction();
     } else if(strcmp(instr_tokens[0], "JMP") == 0) {
         execute_jmp_instruction(instr_tokens[1]);
     } else if(strcmp(instr_tokens[0], "IFEQ") == 0) {
