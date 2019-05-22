@@ -15,6 +15,12 @@ int main (int argc, char *argv[]) {
       }
    }
 
+   // If no address for code file was given, stop execution
+   if(argv[1] == NULL){
+      printf("No instructions found.");
+      return 0;
+   }
+
    // Read source code file and initialize the instruction memory
    char *filename = argv[1];
    FILE *file = fopen(filename, "r");
