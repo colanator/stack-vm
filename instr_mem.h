@@ -44,7 +44,7 @@ void add_instruction(int address, char instruction[]) {
         vm_instruction_memory[address].param_integer = num_parameter;
     } else {
         vm_instruction_memory[address].param_type = type_string;
-        vm_instruction_memory[address].param_string = instr_tokens[1];
+        vm_instruction_memory[address].param_string = strdup(instr_tokens[1]);
     }
 
     no_of_instructions++;
@@ -65,6 +65,6 @@ struct InstrMemElement fetch_instruction(int address) {
 }
 
 // Get the number of instructions in instruction memory
-int no_of_instructions() {
-    return vm_instruction_memory.no_of_instructions;
+int get_no_of_instructions() {
+    return no_of_instructions;
 }

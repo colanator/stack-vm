@@ -10,3 +10,4 @@ stack-vm.vbproj.user
 *.o
 stack-vm
 stack-test
+instr-mem-test
