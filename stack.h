@@ -1,30 +1,47 @@
-struct Stack {
-    int stack[256];
-    int top_elem_of_stack;
-};
-typedef struct Stack STACK;
-STACK vm_stack = {.top_elem_of_stack = 0};
+enum DataType { type_string, type_int };
 
-// Push "elem" to top of stack
+struct StackElement {
+    DataType type;
+    union {
+        char      *str;
+        int       i;
+    }
+};
+
+int top_elem_of_stack = 0;
+
+struct StackElement *vm_stack = malloc(sizeof(struct StackElement) * 1024);
+
+// Push "elem" to top of stack (type integer)
 void push(int elem) {
-    vm_stack.stack[vm_stack.top_elem_of_stack + 1] = elem;
-    vm_stack.top_elem_of_stack++;
+    top_elem_of_stack++;
+    vm_stack[top_elem_of_stack].type = type_int;
+    vm_stack[top_elem_of_stack].i = elem;
+}
+
+// Push "elem" to top of stack (type string)
+void push(char elem[]) {
+    top_elem_of_stack++;
+    vm_stack[top_elem_of_stack].type = type_string;
+    vm_stack[top_elem_of_stack].i = elem;
 }
 
 // Pop the top element of stack and return it
-int pop() {
-    int popped_elem = vm_stack.stack[vm_stack.top_elem_of_stack];
-    vm_stack.top_elem_of_stack--;
-    return popped_elem;
+struct StackElement pop() {
+    struct StackElement poppedElement:
+    poppedElement = vm_stack[top_elem_of_stack];
+    top_elem_of_stack--;
+    return poppedElement;
 }
 
 // Return top element of stack, but don't pop it
-int peek() {
-    int peek_elem = vm_stack.stack[vm_stack.top_elem_of_stack];
-    return peek_elem;
+struct StackElement pop() {
+    struct StackElement poppedElement:
+    poppedElement = vm_stack[top_elem_of_stack];
+    return poppedElement;
 }
 
 // Remove the top element
 void drop() {
-    vm_stack.top_elem_of_stack--;
+    top_elem_of_stack--;
 }
