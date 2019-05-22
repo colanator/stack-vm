@@ -14,7 +14,8 @@ void add_instruction(int address, char instruction[]) {
 
 // Fetch pointer to instruction at "address"
 char* fetch_instruction(int address) {
-    return &vm_instruction_memory.instruction_memory[address];
+    char* str = strdup(vm_instruction_memory.instruction_memory[address]);
+    return str;
 }
 
 // Get the number of instructions in instruction memory
