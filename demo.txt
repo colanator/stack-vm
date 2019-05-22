@@ -1,8 +1,8 @@
 DROP;
 IFEQ 25;
-JMP 7;
+JMP 8;
 PUSH 1;
 ADD;
 PRINT;
-JMP 1;
+JMP 2;
 HALT;
