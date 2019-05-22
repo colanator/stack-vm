@@ -7,5 +7,5 @@ stack-vm: $(obj)
 .PHONY: clean
 clean:
 	rm -f $(obj) stack-vm
-	rm -f $(obj) stack_test
-	rm -f $(obj) instr_mem_test
+	rm -f $(obj) stack-test
+	rm -f $(obj) instr-mem-test

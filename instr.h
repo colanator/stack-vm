@@ -1,40 +1,52 @@
 // ADD - instruction
 // Parameters are added together, result pushed to stack
 void execute_add_instruction(){
-    int first_operand = pop();
-    int second_operand = pop();
-    push(first_operand + second_operand);
+    struct StackElement first_element = pop();
+    int first_operand = first_element.integer;
+    struct StackElement second_element = pop();
+    int second_operand = first_element.integer;
+    push_int(first_operand + second_operand);
 }
 
 // SUB - instruction
 // Second parameter is subtracted from the first, result pushed to stack
 void execute_sub_instruction(){
-    int first_operand = pop();
-    int second_operand = pop();
-    push(first_operand - second_operand);
+    struct StackElement first_element = pop();
+    int first_operand = first_element.integer;
+    struct StackElement second_element = pop();
+    int second_operand = first_element.integer;
+    push_int(first_operand - second_operand);
 }
 
 // MUL - instruction
 // Parameters are multiplied together, result pushed to stack
 void execute_mul_instruction(){
-    int first_operand = pop();
-    int second_operand = pop();
-    push(first_operand * second_operand);
+    struct StackElement first_element = pop();
+    int first_operand = first_element.integer;
+    struct StackElement second_element = pop();
+    int second_operand = first_element.integer;
+    push_int(first_operand * second_operand);
 }
 
 // DIV - instruction
 // First parameter is divided by the first, result pushed to stack
 void execute_div_instruction(){
-    int first_operand = pop();
-    int second_operand = pop();
-    push(first_operand / second_operand);
+    struct StackElement first_element = pop();
+    int first_operand = first_element.integer;
+    struct StackElement second_element = pop();
+    int second_operand = first_element.integer;
+    push_int(first_operand / second_operand);
 }
 
-// PUSH - instruction
+// PUSH - instruction (string)
 // Parameter is pushed to stack
-void execute_push_instruction(char *elem_to_be_pushed){
-    int elem_to_be_pushed_casted = atoi(elem_to_be_pushed);
-    push(elem_to_be_pushed_casted);
+void execute_push_instruction_string(char *elem_to_be_pushed){
+    push_string(elem_to_be_pushed);
+}
+// PUSH - instruction (int)
+// Parameter is pushed to stack
+void execute_push_instruction_int(int elem_to_be_pushed){
+    push_int(elem_to_be_pushed);
 }
 
 // DROP - instruction
@@ -43,115 +55,119 @@ void execute_drop_instruction(){
     drop();
 }
 
-// PRINT - instruction
+// PRINT - instruction (string)
+// Parameter is printed out
+void execute_print_instruction_string(char *elem_to_be_printed){
+    printf("%s\n", elem_to_be_printed);
+}
+// PRINT - instruction (int)
+// Parameter is printed out
+void execute_print_instruction_int(int elem_to_be_printed){
+    printf("%i\n", elem_to_be_printed);
+}
+
+// PEEK - instruction 
 // Top element of stack is printed out without popping
 void execute_print_instruction(){
-    printf("%i\n", peek());
+    struct StackElement element_to_print = peek();
+    if (element_to_print.type = type_string){
+        printf("%s\n", element_to_print.string);
+    }
+    if (element_to_print.type = type_int){
+        printf("%i\n", element_to_print.integer);
+    }
 }
 
 // JMP - instruction
 // Instruction pointer it set to parameter value
-void execute_jmp_instruction(char *jmp_target){
-    int jmp_target_casted = atoi(jmp_target);
-    vm_instruction_memory.instruction_pointer = jmp_target_casted - 1;
+void execute_jmp_instruction(int jmp_target){
+    instruction_pointer = jmp_target - 1;
 }
 
 // IFEQ - instruction
 // If condition matches top element of stack, the next insruction is executed, otherwise instruction pointer is incremented to skip it
-void execute_ifeq_instruction(char *condition){
-    int condition_casted = atoi(condition);
-    if(condition_casted != peek()){
-        vm_instruction_memory.instruction_pointer++;
+void execute_ifeq_instruction(int condition){
+    struct StackElement element_to_compare = peek();
+    if(condition != element_to_compare.integer){
+        instruction_pointer++;
     }
 }
 
 // IFLT - instruction
 // If condition lesser than element of stack, the next insruction is executed, otherwise instruction pointer is incremented to skip it
-void execute_iflt_instruction(char *condition){
-    int condition_casted = atoi(condition);
-    if(condition_casted < peek()){
-        vm_instruction_memory.instruction_pointer++;
+void execute_iflt_instruction(int condition){
+    struct StackElement element_to_compare = peek();
+    if(condition < element_to_compare.integer){
+        instruction_pointer++;
     }
 }
 
 // IFGT - instruction
 // If condition greater than element of stack, the next insruction is executed, otherwise instruction pointer is incremented to skip it
-void execute_ifgt_instruction(char *condition){
-    int condition_casted = atoi(condition);
-    if(condition_casted > peek()){
-        vm_instruction_memory.instruction_pointer++;
+void execute_ifgt_instruction(int condition){
+    struct StackElement element_to_compare = peek();
+    if(condition > element_to_compare.integer){
+        instruction_pointer++;
     }
 }
 
 // HALT - instruction
 // Instruction pointer it set to 1000, which halts program execution
 void execute_halt_instruction(){
-    vm_instruction_memory.instruction_pointer = 1000;
+    instruction_pointer = 1000;
 }
 
 // This function is given a single "instruction" to be executed
-// The function is split into the opcode and the parameters
-void execute_instruction(char instruction[]) {
+void execute_instruction(struct InstrMemElement instruction_to_execute) {
 
-    //Copy instruction string to temporary variable to avoid side effects.
-    char instr_copied[32];
-    strcpy(instr_copied, instruction);
+    struct InstrMemElement instruction;
 
-    //Split instruction into tokens, which determine different parts of instruction.
-    char *instr_tokens[6];
-    char *pch;
-    int counter = 0;
-    pch = strtok(instr_copied, " ;");
-    while(pch != NULL) {
-        instr_tokens[counter] = pch;
-        counter++;
-        pch = strtok(NULL, " ;");
+    instruction.opcode = instruction_to_execute.opcode;
+    if (instruction_to_execute.param_type = string_param){
+        instruction.param_type = string_param;
+        instruction.param_string = strdup(instruction_to_execute.param_string);
     }
-
+    if (instruction_to_execute.param_type = int_param){
+        instruction.param_type = int_param;
+        instruction.param_integer = instruction_to_execute.param_integer;
+    }
+    
     //Read first token of instruction to determine the operation. Call the relevant instruction command.
-    if(strcmp(instr_tokens[0], "ADD") == 0) {
+    if(strcmp(instruction.opcode, "ADD") == 0) {
         execute_add_instruction();
-    } else if(strcmp(instr_tokens[0], "SUB") == 0) {
+    } else if(strcmp(instruction.opcode, "SUB") == 0) {
         execute_sub_instruction();
-    } else if(strcmp(instr_tokens[0], "MUL") == 0) {
+    } else if(strcmp(instruction.opcode, "MUL") == 0) {
         execute_mul_instruction();
-    } else if(strcmp(instr_tokens[0], "DIV") == 0) {
+    } else if(strcmp(instruction.opcode, "DIV") == 0) {
         execute_div_instruction();
-    } else if(strcmp(instr_tokens[0], "PUSH") == 0) {
-        execute_push_instruction(instr_tokens[1]);
-    } else if(strcmp(instr_tokens[0], "DROP") == 0) {
+    } else if(strcmp(instruction.opcode, "PUSH") == 0) {
+        if (instruction.param_type = string_param){
+            execute_push_instruction_string(instruction.param_string);
+        }
+        if (instruction.param_type = int_param){
+            execute_push_instruction_int(instruction.param_integer);
+        }
+    } else if(strcmp(instruction.opcode, "DROP") == 0) {
         execute_drop_instruction();
-    } else if(strcmp(instr_tokens[0], "PRINT") == 0) {
-        execute_print_instruction();
-    } else if(strcmp(instr_tokens[0], "JMP") == 0) {
-        execute_jmp_instruction(instr_tokens[1]);
-    } else if(strcmp(instr_tokens[0], "IFEQ") == 0) {
-        execute_ifeq_instruction(instr_tokens[1]);
-    } else if(strcmp(instr_tokens[0], "IFGT") == 0) {
-        execute_ifeq_instruction(instr_tokens[1]);
-    } else if(strcmp(instr_tokens[0], "IFLT") == 0) {
-        execute_iflt_instruction(instr_tokens[1]);
-    } else if(strcmp(instr_tokens[0], "HALT") == 0) {
+    } else if(strcmp(instruction.opcode, "PRINT") == 0) {
+        if (instruction.param_type = string_param){
+            execute_print_instruction_string(instruction.param_string);
+        }
+        if (instruction.param_type = int_param){
+            execute_print_instruction_int(instruction.param_integer);
+        }
+    } else if(strcmp(instruction.opcode, "JMP") == 0) {
+        execute_jmp_instruction(instruction.param_integer);
+    } else if(strcmp(instruction.opcode, "IFEQ") == 0) {
+        execute_ifeq_instruction(instruction.param_integer);
+    } else if(strcmp(instruction.opcode, "IFGT") == 0) {
+        execute_ifeq_instruction(instruction.param_integer);
+    } else if(strcmp(instruction.opcode, "IFLT") == 0) {
+        execute_iflt_instruction(instruction.param_integer);
+    } else if(strcmp(instruction.opcode, "HALT") == 0) {
         execute_halt_instruction();
     } else {
         printf("Invalid instruction! Check your syntax.\n");
     }
 }
-
-//returns true if instruction, false if label
-//int interpret_instruction(char instruction[]){
-//    char inspected_instruction[32];
-//    strcpy(inspected_instruction, instruction);
-//
-//    char test[6] = "label";
-//    
-//    //printf("inspected_instruction: %s :end", inspected_instruction);
-//    //printf("test: %s :end", test);
-//
-//    if(strstr(inspected_instruction, test) != NULL) {
-//        //printf("Invalid instruction! Check your syntax.%s", instruction);
-//        return 1;
-//    }
-//
-//    return 0;
-//}

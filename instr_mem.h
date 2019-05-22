@@ -1,4 +1,4 @@
-typedef enum {type_string, type_int} PARAM_TYPE;
+typedef enum { string_param, int_param } PARAM_TYPE;
 
 struct InstrMemElement {
     char    *opcode;
@@ -40,10 +40,10 @@ void add_instruction(int address, char instruction[]) {
     int num_parameter = atoi(instr_tokens[1]);
 
     if(num_parameter != 0){
-        vm_instruction_memory[address].param_type = type_int;
+        vm_instruction_memory[address].param_type = int_param;
         vm_instruction_memory[address].param_integer = num_parameter;
     } else {
-        vm_instruction_memory[address].param_type = type_string;
+        vm_instruction_memory[address].param_type = string_param;
         vm_instruction_memory[address].param_string = strdup(instr_tokens[1]);
     }
 
@@ -55,10 +55,10 @@ struct InstrMemElement fetch_instruction(int address) {
     struct InstrMemElement fetchedInstruction;
     fetchedInstruction.opcode = strdup(vm_instruction_memory[address].opcode);
     fetchedInstruction.param_type = vm_instruction_memory[address].param_type;
-    if(fetchedInstruction.param_type == type_int){
+    if(fetchedInstruction.param_type == int_param){
         fetchedInstruction.param_integer = vm_instruction_memory[address].param_integer;
     }
-    if(fetchedInstruction.param_type == type_string){
+    if(fetchedInstruction.param_type == string_param){
         fetchedInstruction.param_string = strdup(vm_instruction_memory[address].param_string);
     }
     return fetchedInstruction;
