@@ -9,3 +9,4 @@ stack-vm.vbproj.user
 *.out
 *.o
 stack-vm
+stack-test
