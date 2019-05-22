@@ -8,8 +8,6 @@
 
 int main (int argc, char *argv[]) {
 
-   int instruction_pointer = 0;
-
    // Initialize stack with input parameters from command line
    if(argc > 2){
       for(int i = 2; i <= argc-1; i++){
