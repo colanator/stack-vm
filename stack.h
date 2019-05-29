@@ -31,6 +31,7 @@ void push_string(char elem[]) {
     top_elem_of_stack++;
     vm_stack[top_elem_of_stack].type = type_string;
     vm_stack[top_elem_of_stack].string = strdup(elem_copied);
+    free((char*)elem);
 }
 
 // Pop the top element of stack and return it
@@ -70,8 +71,12 @@ struct StackElement peek() {
 
 // Remove the top element
 void drop() {
+    if(vm_stack[top_elem_of_stack].type == type_string){
+        if(vm_stack[top_elem_of_stack].string){
+            free((char*)vm_stack[top_elem_of_stack].string);
+        }
+    }
     top_elem_of_stack--;
-    // TODO deallocate memory for string element
 }
 
 // Duplicate top element of stack

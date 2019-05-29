@@ -56,8 +56,15 @@ int main (int argc, char *argv[]) {
    while (instruction_pointer <= 999) {
       struct InstrMemElement instruction = fetch_instruction(instruction_pointer);
       execute_instruction(instruction);
+      free(instruction.opcode);
+      if(instruction.param_type == string_param){
+         free(instruction.param_string);
+      }
       instruction_pointer++;
    }
+
+   free(vm_stack);
+   free(vm_instruction_memory);
 
    return 0;
 }

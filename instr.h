@@ -84,6 +84,7 @@ void execute_peek_instruction(){
     struct StackElement element_to_print = peek();
     if (element_to_print.type == type_string){
         printf("%s\n", element_to_print.string);
+        free((char*)element_to_print.string);
     }
     if (element_to_print.type == type_int){
         printf("%i\n", element_to_print.integer);
@@ -103,6 +104,7 @@ void execute_ifeq_instruction(int condition){
     if(condition != element_to_compare.integer){
         instruction_pointer++;
     }
+    free((char*)element_to_compare.string);
 }
 
 // IFLT - instruction
@@ -112,6 +114,7 @@ void execute_iflt_instruction(int condition){
     if(condition < element_to_compare.integer){
         instruction_pointer++;
     }
+    free((char*)element_to_compare.string);
 }
 
 // IFGT - instruction
@@ -121,6 +124,7 @@ void execute_ifgt_instruction(int condition){
     if(condition > element_to_compare.integer){
         instruction_pointer++;
     }
+    free((char*)element_to_compare.string);
 }
 
 // HALT - instruction
@@ -188,4 +192,8 @@ void execute_instruction(struct InstrMemElement instruction_to_execute) {
     } else {
         printf("Invalid instruction: %s! Check your syntax.\n", instruction.opcode);
     }
+
+    /*if (instruction.param_type == string_param){
+        free(instruction.param_string);
+    }*/
 }
