@@ -1,0 +1,10 @@
+PUSH 3;
+DUP;
+ADD;
+PEEK;
+DROP;
+PUSH eka;
+PUSH toka;
+ROT;
+PEEK;
+HALT;

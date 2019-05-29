@@ -55,6 +55,18 @@ void execute_drop_instruction(){
     drop();
 }
 
+// DUP - instruction
+// Duplicate top element of stack
+void execute_dup_instruction(){
+    dup();
+}
+
+// ROT - instruction
+// Rotate two topmost elements of stack
+void execute_rot_instruction(){
+    rot();
+}
+
 // PRINT - instruction (string)
 // Parameter is printed out
 void execute_print_instruction_string(char *elem_to_be_printed){
@@ -150,6 +162,10 @@ void execute_instruction(struct InstrMemElement instruction_to_execute) {
         }
     } else if(strcmp(instruction.opcode, "DROP") == 0) {
         execute_drop_instruction();
+    } else if(strcmp(instruction.opcode, "DUP") == 0) {
+        execute_dup_instruction();
+    } else if(strcmp(instruction.opcode, "ROT") == 0) {
+        execute_rot_instruction();
     } else if(strcmp(instruction.opcode, "PRINT") == 0) {
         if (instruction.param_type == string_param){
             execute_print_instruction_string(instruction.param_string);

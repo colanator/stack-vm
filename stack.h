@@ -35,41 +35,126 @@ void push_string(char elem[]) {
 
 // Pop the top element of stack and return it
 struct StackElement pop() {
-    struct StackElement poppedElement;
-    poppedElement.type = vm_stack[top_elem_of_stack].type;
-    if(poppedElement.type == type_int){
-        poppedElement.integer = vm_stack[top_elem_of_stack].integer;
+    struct StackElement popped_element;
+    popped_element.type = vm_stack[top_elem_of_stack].type;
+    if(popped_element.type == type_int){
+        popped_element.integer = vm_stack[top_elem_of_stack].integer;
     }
-    if(poppedElement.type == type_string){
+    if(popped_element.type == type_string){
         if (vm_stack[top_elem_of_stack].string == NULL){
-            poppedElement.string = "";
+            popped_element.string = "";
         } else {
-            poppedElement.string = strdup(vm_stack[top_elem_of_stack].string);
+            popped_element.string = strdup(vm_stack[top_elem_of_stack].string);
         }
     }
     top_elem_of_stack--;
-    return poppedElement;
+    return popped_element;
 }
 
 // Return top element of stack, but don't pop it
 struct StackElement peek() {
-    struct StackElement poppedElement;
-    poppedElement.type = vm_stack[top_elem_of_stack].type;
-    if(poppedElement.type == type_int){
-        poppedElement.integer = vm_stack[top_elem_of_stack].integer;
+    struct StackElement popped_element;
+    popped_element.type = vm_stack[top_elem_of_stack].type;
+    if(popped_element.type == type_int){
+        popped_element.integer = vm_stack[top_elem_of_stack].integer;
     }
-    if(poppedElement.type == type_string){
+    if(popped_element.type == type_string){
         if (vm_stack[top_elem_of_stack].string == NULL){
-            poppedElement.string = "";
+            popped_element.string = "";
         } else {
-            poppedElement.string = strdup(vm_stack[top_elem_of_stack].string);
+            popped_element.string = strdup(vm_stack[top_elem_of_stack].string);
         }
     }
-    return poppedElement;
+    return popped_element;
 }
 
 // Remove the top element
 void drop() {
     top_elem_of_stack--;
     // TODO deallocate memory for string element
+}
+
+// Duplicate top element of stack
+void dup() {
+    struct StackElement topmost_element;
+    topmost_element.type = vm_stack[top_elem_of_stack].type;
+    if(topmost_element.type == type_int){
+        topmost_element.integer = vm_stack[top_elem_of_stack].integer;
+        push_int(topmost_element.integer);
+    }
+    if(topmost_element.type == type_string){
+        if (vm_stack[top_elem_of_stack].string == NULL){
+            topmost_element.string = "";
+            push_string(topmost_element.string);
+        } else {
+            topmost_element.string = strdup(vm_stack[top_elem_of_stack].string);
+            push_string(topmost_element.string);
+        }
+    }
+}
+
+// Rotate the two top elements of stack
+void rot() {
+    // fetch two topmost elements
+    struct StackElement topmost_element;
+    struct StackElement second_topmost_element;
+    topmost_element.type = vm_stack[top_elem_of_stack].type;
+    if(topmost_element.type == type_int){
+        topmost_element.integer = vm_stack[top_elem_of_stack].integer;
+    }
+    if(topmost_element.type == type_string){
+        if (vm_stack[top_elem_of_stack].string == NULL){
+            topmost_element.string = "";
+        } else {
+            topmost_element.string = vm_stack[top_elem_of_stack].string;
+        }
+    }
+    second_topmost_element.type = vm_stack[top_elem_of_stack-1].type;
+    if(second_topmost_element.type == type_int){
+        second_topmost_element.integer = vm_stack[top_elem_of_stack-1].integer;
+    }
+    if(second_topmost_element.type == type_string){
+        if (vm_stack[top_elem_of_stack-1].string == NULL){
+            second_topmost_element.string = "";
+        } else {
+            second_topmost_element.string = vm_stack[top_elem_of_stack-1].string;
+        }
+    }
+    // store topmost in temp variable
+    struct StackElement temp_topmost_element;
+    temp_topmost_element.type = topmost_element.type;
+    if(temp_topmost_element.type == type_int){
+        temp_topmost_element.integer = topmost_element.integer;
+    }
+    if(temp_topmost_element.type == type_string){
+        if (topmost_element.string == NULL){
+            temp_topmost_element.string = "";
+        } else {
+            temp_topmost_element.string = topmost_element.string;
+        }
+    }
+    // store second topmost element to topmost
+    vm_stack[top_elem_of_stack].type = second_topmost_element.type;
+    if(vm_stack[top_elem_of_stack].type == type_int){
+        vm_stack[top_elem_of_stack].integer = second_topmost_element.integer;
+    }
+    if(vm_stack[top_elem_of_stack].type == type_string){
+        if (vm_stack[top_elem_of_stack].string == NULL){
+            vm_stack[top_elem_of_stack].string = "";
+        } else {
+            vm_stack[top_elem_of_stack].string = second_topmost_element.string;
+        }
+    }
+    // store topmost element to second topmost from temp storage
+    vm_stack[top_elem_of_stack-1].type = temp_topmost_element.type;
+    if(vm_stack[top_elem_of_stack-1].type == type_int){
+        vm_stack[top_elem_of_stack-1].integer = temp_topmost_element.integer;
+    }
+    if(vm_stack[top_elem_of_stack-1].type == type_string){
+        if (temp_topmost_element.string == NULL){
+            vm_stack[top_elem_of_stack-1].string = "";
+        } else {
+            vm_stack[top_elem_of_stack-1].string = temp_topmost_element.string;
+        }
+    }
 }
