@@ -1,7 +1,0 @@
-IFEQ 3;
-JMP 7;
-PUSH 1;
-ADD;
-PEEK;
-JMP 1;
-HALT;

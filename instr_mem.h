@@ -22,32 +22,44 @@ void init_instr_mem() {
 // Parse "instruction" and add it to instruction memory to "address"
 void add_instruction(int address, char instruction[]) {
     //Copy instruction string to temporary variable to avoid side effects.
-    char instr_copied[128];
+    char *instr_copied = malloc(128*sizeof(char));
     strcpy(instr_copied, instruction);
 
     //Split instruction into tokens, which determine different parts of instruction.
-    char *instr_tokens[24];
-    char *pch;
-    int counter = 0;
-    pch = strtok(instr_copied, " ;");
-    while(pch != NULL) {
-        instr_tokens[counter] = pch;
-        counter++;
-        pch = strtok(NULL, " ;");
+    const char ch_space = ' ';
+    const char ch_end = ';';
+    const char *end_of_opcode = strchr(instr_copied, ch_space);
+    if(end_of_opcode == NULL){
+        end_of_opcode = strchr(instr_copied, ch_end);
     }
-    vm_instruction_memory[address].opcode = strdup(instr_tokens[0]);
+    const char *end_of_parameter = strrchr(instr_copied, ch_end);
+    const int sizeof_opcode = end_of_opcode - instr_copied;
+    const int sizeof_parameter = end_of_parameter - end_of_opcode;
 
-    int num_parameter = atoi(instr_tokens[1]);
+    char *opcode = calloc(32, sizeof(char));
+    if(sizeof_opcode >= 0 && sizeof_opcode < 256 && end_of_opcode != NULL){
+        strncpy(opcode, instr_copied, sizeof_opcode);
+    }
+
+    char *parameter = calloc(128, sizeof(char));
+    if(sizeof_parameter >= 0 && sizeof_parameter < 256 && end_of_parameter != NULL){
+        strncpy(parameter, end_of_opcode, sizeof_parameter);
+    }
+
+    no_of_instructions++;
+
+    vm_instruction_memory[address].opcode = strdup(opcode);
+
+
+    int num_parameter = atoi(parameter);
 
     if(num_parameter != 0){
         vm_instruction_memory[address].param_type = int_param;
         vm_instruction_memory[address].param_integer = num_parameter;
     } else {
         vm_instruction_memory[address].param_type = string_param;
-        vm_instruction_memory[address].param_string = strdup(instr_tokens[1]);
+        vm_instruction_memory[address].param_string = strdup(parameter);
     }
-
-    no_of_instructions++;
 }
 
 // Fetch instruction at "address"

@@ -12,13 +12,16 @@ int main (int argc, char *argv[]) {
 
    // Initialize stack with input parameters from command line
    int elem_to_push = 0;
+   char argv_copied[64];
+
    if(argc > 2){
       for(int i = 2; i <= argc-1; i++){
          elem_to_push = atoi(argv[i]);
          if(elem_to_push > 0){
             push_int(elem_to_push);
          } else {
-            push_string(argv[i]);
+            strcpy(argv_copied, argv[i]);
+            push_string(argv_copied);
          }
       }
    }
@@ -51,7 +54,8 @@ int main (int argc, char *argv[]) {
    // Execute instructions from the instruction memory, incrementing the instruction pointer
    // If instruction pointer is 999 or more the program is considered executed
    while (instruction_pointer <= 999) {
-      execute_instruction(fetch_instruction(instruction_pointer));
+      struct InstrMemElement instruction = fetch_instruction(instruction_pointer);
+      execute_instruction(instruction);
       instruction_pointer++;
    }
 

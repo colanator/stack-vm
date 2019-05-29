@@ -30,7 +30,7 @@ void push_string(char elem[]) {
     strcpy(elem_copied, elem);
     top_elem_of_stack++;
     vm_stack[top_elem_of_stack].type = type_string;
-    vm_stack[top_elem_of_stack].string = elem;
+    vm_stack[top_elem_of_stack].string = strdup(elem_copied);
 }
 
 // Pop the top element of stack and return it
@@ -41,7 +41,11 @@ struct StackElement pop() {
         poppedElement.integer = vm_stack[top_elem_of_stack].integer;
     }
     if(poppedElement.type == type_string){
-        poppedElement.string = strdup(vm_stack[top_elem_of_stack].string);
+        if (vm_stack[top_elem_of_stack].string == NULL){
+            poppedElement.string = "";
+        } else {
+            poppedElement.string = strdup(vm_stack[top_elem_of_stack].string);
+        }
     }
     top_elem_of_stack--;
     return poppedElement;
@@ -55,7 +59,11 @@ struct StackElement peek() {
         poppedElement.integer = vm_stack[top_elem_of_stack].integer;
     }
     if(poppedElement.type == type_string){
-        poppedElement.string = strdup(vm_stack[top_elem_of_stack].string);
+        if (vm_stack[top_elem_of_stack].string == NULL){
+            poppedElement.string = "";
+        } else {
+            poppedElement.string = strdup(vm_stack[top_elem_of_stack].string);
+        }
     }
     return poppedElement;
 }

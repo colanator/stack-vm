@@ -4,7 +4,7 @@ void execute_add_instruction(){
     struct StackElement first_element = pop();
     int first_operand = first_element.integer;
     struct StackElement second_element = pop();
-    int second_operand = first_element.integer;
+    int second_operand = second_element.integer;
     push_int(first_operand + second_operand);
 }
 
@@ -14,7 +14,7 @@ void execute_sub_instruction(){
     struct StackElement first_element = pop();
     int first_operand = first_element.integer;
     struct StackElement second_element = pop();
-    int second_operand = first_element.integer;
+    int second_operand = second_element.integer;
     push_int(first_operand - second_operand);
 }
 
@@ -24,7 +24,7 @@ void execute_mul_instruction(){
     struct StackElement first_element = pop();
     int first_operand = first_element.integer;
     struct StackElement second_element = pop();
-    int second_operand = first_element.integer;
+    int second_operand = second_element.integer;
     push_int(first_operand * second_operand);
 }
 
@@ -34,7 +34,7 @@ void execute_div_instruction(){
     struct StackElement first_element = pop();
     int first_operand = first_element.integer;
     struct StackElement second_element = pop();
-    int second_operand = first_element.integer;
+    int second_operand = second_element.integer;
     push_int(first_operand / second_operand);
 }
 
@@ -68,12 +68,12 @@ void execute_print_instruction_int(int elem_to_be_printed){
 
 // PEEK - instruction 
 // Top element of stack is printed out without popping
-void execute_print_instruction(){
+void execute_peek_instruction(){
     struct StackElement element_to_print = peek();
-    if (element_to_print.type = type_string){
+    if (element_to_print.type == type_string){
         printf("%s\n", element_to_print.string);
     }
-    if (element_to_print.type = type_int){
+    if (element_to_print.type == type_int){
         printf("%i\n", element_to_print.integer);
     }
 }
@@ -123,11 +123,11 @@ void execute_instruction(struct InstrMemElement instruction_to_execute) {
     struct InstrMemElement instruction;
 
     instruction.opcode = instruction_to_execute.opcode;
-    if (instruction_to_execute.param_type = string_param){
+    if (instruction_to_execute.param_type == string_param){
         instruction.param_type = string_param;
         instruction.param_string = strdup(instruction_to_execute.param_string);
     }
-    if (instruction_to_execute.param_type = int_param){
+    if (instruction_to_execute.param_type == int_param){
         instruction.param_type = int_param;
         instruction.param_integer = instruction_to_execute.param_integer;
     }
@@ -142,21 +142,23 @@ void execute_instruction(struct InstrMemElement instruction_to_execute) {
     } else if(strcmp(instruction.opcode, "DIV") == 0) {
         execute_div_instruction();
     } else if(strcmp(instruction.opcode, "PUSH") == 0) {
-        if (instruction.param_type = string_param){
+        if (instruction.param_type == string_param){
             execute_push_instruction_string(instruction.param_string);
         }
-        if (instruction.param_type = int_param){
+        if (instruction.param_type == int_param){
             execute_push_instruction_int(instruction.param_integer);
         }
     } else if(strcmp(instruction.opcode, "DROP") == 0) {
         execute_drop_instruction();
     } else if(strcmp(instruction.opcode, "PRINT") == 0) {
-        if (instruction.param_type = string_param){
+        if (instruction.param_type == string_param){
             execute_print_instruction_string(instruction.param_string);
         }
-        if (instruction.param_type = int_param){
+        if (instruction.param_type == int_param){
             execute_print_instruction_int(instruction.param_integer);
         }
+    } else if(strcmp(instruction.opcode, "PEEK") == 0) {
+        execute_peek_instruction();
     } else if(strcmp(instruction.opcode, "JMP") == 0) {
         execute_jmp_instruction(instruction.param_integer);
     } else if(strcmp(instruction.opcode, "IFEQ") == 0) {
@@ -168,6 +170,6 @@ void execute_instruction(struct InstrMemElement instruction_to_execute) {
     } else if(strcmp(instruction.opcode, "HALT") == 0) {
         execute_halt_instruction();
     } else {
-        printf("Invalid instruction! Check your syntax.\n");
+        printf("Invalid instruction: %s! Check your syntax.\n", instruction.opcode);
     }
 }
