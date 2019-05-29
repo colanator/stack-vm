@@ -45,11 +45,12 @@ void add_instruction(int address, char instruction[]) {
     if(sizeof_parameter >= 0 && sizeof_parameter < 256 && end_of_parameter != NULL){
         strncpy(parameter, end_of_opcode, sizeof_parameter);
     }
+    free(instr_copied);
 
     no_of_instructions++;
 
     vm_instruction_memory[address].opcode = strdup(opcode);
-
+    free(opcode);
 
     int num_parameter = atoi(parameter);
 
@@ -60,6 +61,7 @@ void add_instruction(int address, char instruction[]) {
         vm_instruction_memory[address].param_type = string_param;
         vm_instruction_memory[address].param_string = strdup(parameter);
     }
+    free(parameter);
 }
 
 // Fetch instruction at "address"
