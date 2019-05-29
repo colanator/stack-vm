@@ -104,7 +104,6 @@ void execute_ifeq_instruction(int condition){
     if(condition != element_to_compare.integer){
         instruction_pointer++;
     }
-    free((char*)element_to_compare.string);
 }
 
 // IFLT - instruction
@@ -114,7 +113,6 @@ void execute_iflt_instruction(int condition){
     if(condition < element_to_compare.integer){
         instruction_pointer++;
     }
-    free((char*)element_to_compare.string);
 }
 
 // IFGT - instruction
@@ -124,7 +122,6 @@ void execute_ifgt_instruction(int condition){
     if(condition > element_to_compare.integer){
         instruction_pointer++;
     }
-    free((char*)element_to_compare.string);
 }
 
 // HALT - instruction
